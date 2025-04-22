@@ -1,10 +1,8 @@
-package com.bot.travel.repository;
-
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+package com.bot.travel.repository.user;
 
 import com.bot.travel.model.user.User;
-
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository

@@ -1,5 +1,5 @@
 package com.bot.travel.model.social;
 
-enum FriendshipStatus {
+public enum FriendshipStatus {
     PENDING, ACCEPTED, REJECTED
 }

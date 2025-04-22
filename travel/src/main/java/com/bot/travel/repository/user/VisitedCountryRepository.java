@@ -1,4 +1,4 @@
-package com.bot.travel.repository;
+package com.bot.travel.repository.user;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
