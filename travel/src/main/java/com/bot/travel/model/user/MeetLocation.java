@@ -1,4 +1,4 @@
-package com.bot.travel.model.common;
+package com.bot.travel.model.user;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
