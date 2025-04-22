@@ -11,4 +11,5 @@ public interface CountryRepository extends MongoRepository<Country, String> {
     Optional<Country> findByName(String name);
     List<Country> findByContinentId(String continentId);
     List<Country> findByLanguagesContaining(String language);
+    List<Country> findByNameContainingIgnoreCase(String name);
 }
