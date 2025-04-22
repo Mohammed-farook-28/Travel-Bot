@@ -3,7 +3,6 @@ package com.bot.travel.controller.geography;
 import com.bot.travel.model.geography.Continent;
 import com.bot.travel.model.geography.Country;
 import com.bot.travel.service.geography.GeographyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,6 @@ public class GeographyController {
 
     private final GeographyService geographyService;
 
-    @Autowired
     public GeographyController(GeographyService geographyService) {
         this.geographyService = geographyService;
     }
