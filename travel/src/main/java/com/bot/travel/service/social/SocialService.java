@@ -29,15 +29,14 @@ public class SocialService {
         this.userRepository = userRepository;
     }
 
-    // Friendship methods
     @Transactional
     public Friendship sendFriendRequest(String requesterId, String recipientId) {
-        // Check if users exist
+
         if (!userRepository.existsById(requesterId) || !userRepository.existsById(recipientId)) {
             throw new RuntimeException("One or both users not found");
         }
 
-        // Check if request already exists
+
         Optional<Friendship> existingFriendship = friendshipRepository
             .findByRequesterAndRecipient(requesterId, recipientId);
         
@@ -45,7 +44,7 @@ public class SocialService {
             return existingFriendship.get();
         }
 
-        // Create new friendship request
+
         Friendship friendship = new Friendship();
         friendship.setRequester(requesterId);
         friendship.setRecipient(recipientId);
@@ -92,28 +91,27 @@ public class SocialService {
     }
 
     public List<User> getFriends(String userId) {
-        // Get accepted friendships where user is either requester or recipient
+
         List<Friendship> friendships = friendshipRepository.findByRequesterAndStatus(userId, "ACCEPTED");
         friendships.addAll(friendshipRepository.findByRecipientAndStatus(userId, "ACCEPTED"));
         
-        // Extract friend IDs
+
         List<String> friendIds = friendships.stream()
             .map(f -> f.getRequester().equals(userId) ? f.getRecipient() : f.getRequester())
             .collect(Collectors.toList());
         
-        // Get user objects
+
         return userRepository.findAllById(friendIds);
     }
 
-    // Follower methods
+
     @Transactional
     public Follower followUser(String followerId, String followingId) {
-        // Check if users exist
+
         if (!userRepository.existsById(followerId) || !userRepository.existsById(followingId)) {
             throw new RuntimeException("One or both users not found");
         }
 
-        // Check if already following
         Optional<Follower> existingFollower = followerRepository
             .findByFollowerIdAndFollowingId(followerId, followingId);
         
@@ -121,7 +119,7 @@ public class SocialService {
             return existingFollower.get();
         }
 
-        // Create new follower relationship
+
         Follower follower = new Follower();
         follower.setFollowerId(followerId);
         follower.setFollowingId(followingId);

@@ -20,7 +20,6 @@ public class SocialController {
         this.socialService = socialService;
     }
 
-    // Friendship endpoints
     @PostMapping("/friendships/request/{recipientId}")
     public ResponseEntity<Friendship> sendFriendRequest(
             @RequestAttribute("userId") String requesterId,
@@ -76,7 +75,6 @@ public class SocialController {
         return ResponseEntity.ok(socialService.getFriends(id));
     }
 
-    // Follower endpoints
     @PostMapping("/follow/{followingId}")
     public ResponseEntity<Follower> followUser(
             @RequestAttribute("userId") String followerId,
