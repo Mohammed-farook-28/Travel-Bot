@@ -1,10 +1,11 @@
 package com.bot.travel.model.social;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Date;
 
 @Data
@@ -16,7 +17,7 @@ public class Friendship {
     private String id;
     private String requester;
     private String recipient;
-    private FriendshipStatus status;
+    private String status;
     private Date createdAt;
     private Date updatedAt;
 }
