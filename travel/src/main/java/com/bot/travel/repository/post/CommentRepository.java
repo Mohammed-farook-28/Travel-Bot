@@ -10,4 +10,5 @@ import java.util.Date;
 public interface CommentRepository extends MongoRepository<Comment, String> {
     List<Comment> findByUserId(String userId);
     List<Comment> findByCreatedAtBetween(Date startDate, Date endDate);
+    List<Comment> findByPostId(String postId);
 }

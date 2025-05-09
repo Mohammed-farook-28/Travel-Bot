@@ -17,17 +17,13 @@ public class Post {
     private String id;
     private String userId;
     private String content;
-    
     private List<Media> media;
     private List<String> countryTags;
     private List<String> hashtags;
-    
     private Integer likeCount;
     private Integer commentCount;
     private List<Comment> comments;
-    
     private Itinerary itinerary;
-    
     private Date createdAt;
     private Date updatedAt;
 }
