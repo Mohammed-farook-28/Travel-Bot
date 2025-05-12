@@ -40,7 +40,6 @@ public class ContactService {
         contact.setUpdatedAt(Instant.now());
         Contact savedContact = contactRepository.save(contact);
 
-        // 🔍 **Audit Log**
         Map<String, Object> changes = new HashMap<>();
         changes.put("name", contact.getName());
         changes.put("nationality", contact.getNationality());
@@ -57,7 +56,6 @@ public class ContactService {
                 contact.setUpdatedAt(Instant.now());
                 Contact updatedContact = contactRepository.save(contact);
 
-                // 🔍 **Audit Log**
                 Map<String, Object> changes = new HashMap<>();
                 changes.put("name", contact.getName());
                 changes.put("nationality", contact.getNationality());
@@ -76,10 +74,10 @@ public class ContactService {
             contact.setDeletedAt(Instant.now());
             contactRepository.save(contact);
 
-            // 🔍 **Audit Log**
             Map<String, Object> changes = new HashMap<>();
             changes.put("isDeleted", true);
-            auditLoggerService.logEvent("Contact", "DELETE", id, changes, deletedBy);
+
+            auditLoggerService.logEvent("Contact", "DELETE", contact.getUserId(), changes, deletedBy);
         });
     }
 
@@ -91,10 +89,9 @@ public class ContactService {
             contact.setDeletedAt(null);
             contactRepository.save(contact);
 
-            // 🔍 **Audit Log**
             Map<String, Object> changes = new HashMap<>();
             changes.put("isDeleted", false);
-            auditLoggerService.logEvent("Contact", "RESTORE", id, changes, "SYSTEM");
+            auditLoggerService.logEvent("Contact", "RESTORE", contact.getUserId(), changes, "SYSTEM");
         });
     }
 }

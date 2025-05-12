@@ -32,6 +32,22 @@ public class CompletedBucketListItemController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+    @PostMapping
+    public ResponseEntity<CompletedBucketListItem> createCompletedBucketListItem(@Valid @RequestBody CompletedBucketListItem item) {
+        CompletedBucketListItem savedItem = completedBucketListItemService.saveCompletedBucketListItem(item);
+        return new ResponseEntity<>(savedItem, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CompletedBucketListItem> updateCompletedBucketListItem(@PathVariable String id, @Valid @RequestBody CompletedBucketListItem item) {
+        try {
+            CompletedBucketListItem updatedItem = completedBucketListItemService.updateCompletedBucketListItem(id, item);
+            return ResponseEntity.ok(updatedItem);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> softDeleteCompletedBucketListItem(@PathVariable String id, @RequestParam String deletedBy) {
         completedBucketListItemService.softDeleteCompletedBucketListItem(id, deletedBy);

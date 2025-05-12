@@ -12,5 +12,9 @@ import java.util.Optional;
 public interface TriedLocalFoodRepository extends MongoRepository<TriedLocalFood, String> {
     List<TriedLocalFood> findByUserIdAndIsDeletedFalse(String userId);
     Optional<TriedLocalFood> findByUserIdAndFoodIdAndIsDeletedFalse(String userId, String foodId);
+
+    // ✅ Added missing method
+    Optional<TriedLocalFood> findByIdAndIsDeletedFalse(String id);
+
     List<TriedLocalFood> findAllByIsDeletedFalse();
 }

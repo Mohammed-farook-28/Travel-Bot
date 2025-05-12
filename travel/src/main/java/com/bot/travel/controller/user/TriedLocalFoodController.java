@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,6 +30,12 @@ public class TriedLocalFoodController {
         return triedLocalFoodService.getTriedLocalFoodById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @PostMapping
+    public ResponseEntity<TriedLocalFood> createTriedLocalFood(@Valid @RequestBody TriedLocalFood triedLocalFood) {
+        TriedLocalFood savedFood = triedLocalFoodService.saveTriedLocalFood(triedLocalFood);
+        return new ResponseEntity<>(savedFood, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

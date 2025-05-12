@@ -3,21 +3,26 @@ package com.bot.travel.service.user;
 
 import com.bot.travel.model.user.User;
 import com.bot.travel.repository.user.UserRepository;
+import com.bot.travel.service.audit.AuditLoggerService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.validation.Valid;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final AuditLoggerService auditLoggerService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, AuditLoggerService auditLoggerService) {
         this.userRepository = userRepository;
+        this.auditLoggerService = auditLoggerService;
     }
 
     public List<User> getAllUsers() {
@@ -33,7 +38,14 @@ public class UserService {
     public User saveUser(@Valid User user) {
         user.setCreatedAt(Instant.now());
         user.setUpdatedAt(Instant.now());
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        Map<String, Object> changes = new HashMap<>();
+        changes.put("username", user.getUsername());
+        changes.put("email", user.getEmail());
+        auditLoggerService.logEvent("User", "CREATE", user.getId(), changes, "SYSTEM");
+
+        return savedUser;
     }
 
     @Transactional
@@ -42,7 +54,14 @@ public class UserService {
             .map(existingUser -> {
                 user.setId(id);
                 user.setUpdatedAt(Instant.now());
-                return userRepository.save(user);
+                User updatedUser = userRepository.save(user);
+
+                Map<String, Object> changes = new HashMap<>();
+                changes.put("username", user.getUsername());
+                changes.put("email", user.getEmail());
+                auditLoggerService.logEvent("User", "UPDATE", user.getId(), changes, "SYSTEM");
+
+                return updatedUser;
             })
             .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
     }
@@ -54,6 +73,10 @@ public class UserService {
             user.setDeletedBy(deletedBy);
             user.setDeletedAt(Instant.now());
             userRepository.save(user);
+
+            Map<String, Object> changes = new HashMap<>();
+            changes.put("isDeleted", true);
+            auditLoggerService.logEvent("User", "DELETE", user.getId(), changes, deletedBy);
         });
     }
 
@@ -64,6 +87,10 @@ public class UserService {
             user.setDeletedBy(null);
             user.setDeletedAt(null);
             userRepository.save(user);
+
+            Map<String, Object> changes = new HashMap<>();
+            changes.put("isDeleted", false);
+            auditLoggerService.logEvent("User", "RESTORE", user.getId(), changes, "SYSTEM");
         });
     }
 }

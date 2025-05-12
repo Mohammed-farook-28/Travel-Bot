@@ -12,5 +12,6 @@ import java.util.Optional;
 public interface CompletedBucketListItemRepository extends MongoRepository<CompletedBucketListItem, String> {
     List<CompletedBucketListItem> findByUserIdAndIsDeletedFalse(String userId);
     Optional<CompletedBucketListItem> findByUserIdAndBucketListItemIdAndIsDeletedFalse(String userId, String bucketListItemId);
+    Optional<CompletedBucketListItem> findByIdAndIsDeletedFalse(String id);
     List<CompletedBucketListItem> findAllByIsDeletedFalse();
 }
