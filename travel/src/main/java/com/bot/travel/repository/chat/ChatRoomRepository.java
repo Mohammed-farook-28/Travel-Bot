@@ -13,5 +13,5 @@ public interface ChatRoomRepository extends MongoRepository<ChatRoom, String> {
     List<ChatRoom> findByIsGroup(Boolean isGroup);
     List<ChatRoom> findByCreatedBy(String userId);
     List<ChatRoom> findByLastActivityAfter(Date date);
-    Long countMembersByChatRoomId(String chatRoomId);
+    Long countMembersById(String Id);
 }

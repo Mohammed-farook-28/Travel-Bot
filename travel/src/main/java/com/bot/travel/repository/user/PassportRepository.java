@@ -10,6 +10,7 @@ import java.util.Date;
 
 @Repository
 public interface PassportRepository extends MongoRepository<Passport, String> {
-    List<Passport> findByCountry(String country);
+    List<Passport> findByCountryIsoCode(String countryIsoCode);
     List<Passport> findByExpiryDateBefore(Date date);
+    List<Passport> findByUserId(String userId);
 }

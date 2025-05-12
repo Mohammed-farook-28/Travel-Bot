@@ -1,15 +1,16 @@
+// com.bot.travel.repository.user.TriedLocalFoodRepository.java
 package com.bot.travel.repository.user;
 
+import com.bot.travel.model.user.TriedLocalFood;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import com.bot.travel.model.user.TriedLocalFood;
-
 import java.util.List;
-import java.util.Date;
+import java.util.Optional;
 
 @Repository
 public interface TriedLocalFoodRepository extends MongoRepository<TriedLocalFood, String> {
-    List<TriedLocalFood> findByCountryId(String countryId);
-    List<TriedLocalFood> findByTriedDateBetween(Date startDate, Date endDate);
+    List<TriedLocalFood> findByUserIdAndIsDeletedFalse(String userId);
+    Optional<TriedLocalFood> findByUserIdAndFoodIdAndIsDeletedFalse(String userId, String foodId);
+    List<TriedLocalFood> findAllByIsDeletedFalse();
 }

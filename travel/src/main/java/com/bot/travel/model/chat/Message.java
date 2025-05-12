@@ -21,4 +21,5 @@ public class Message {
     private String mediaUrl;
     private List<String> readBy;
     private Date createdAt;
+    private MessageType messageType;
 }

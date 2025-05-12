@@ -51,13 +51,7 @@ public class PointsService {
         userPoints.setTotalPoints(userPoints.getTotalPoints() + points);
         userPointsRepository.save(userPoints);
         
-        // Update the user's totalPoints field as well for quick access
-        Optional<User> userOpt = userRepository.findById(userId);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            user.setTotalPoints(user.getTotalPoints() + points);
-            userRepository.save(user);
-        }
+                            
     }
     
     public List<PointHistory> getUserPointsHistory(String userId) {

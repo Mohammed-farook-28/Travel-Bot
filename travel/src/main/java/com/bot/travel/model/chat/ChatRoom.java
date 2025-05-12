@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "chat_rooms")
+@Document(collection = "chatrooms")
 public class ChatRoom {
     @Id
     private String id;
