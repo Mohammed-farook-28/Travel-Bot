@@ -9,9 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface FollowerRepository extends MongoRepository<Follower, String> {
-    Optional<Follower> findByFollowerIdAndFollowingId(String followerId, String followingId);
-    void deleteByFollowerIdAndFollowingId(String followerId, String followingId);
-    List<Follower> findByFollowerId(String followerId);
-    List<Follower> findByFollowingId(String followingId);
-    boolean existsByFollowerIdAndFollowingId(String followerId, String followingId);
+    Optional<Follower> findByFollowerIdAndFollowingIdAndIsDeletedFalse(String followerId, String followingId);
+    List<Follower> findAllByFollowerIdAndIsDeletedFalse(String followerId);
+    List<Follower> findAllByFollowingIdAndIsDeletedFalse(String followingId);
+    List<Follower> findAllByIsDeletedFalse();
 }
